@@ -4,5 +4,6 @@
 
 int main()
 {
+	std::cout << "this" << std::endl;
 	return 0;
 }
