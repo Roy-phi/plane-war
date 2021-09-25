@@ -7,7 +7,9 @@
 #include <conio.h>
 
 namespace game {
-	Game::Game() :time(0), state(1), player_control(0),is_game_over(false) {};
+	Game::Game() :time(0), state(1), player_control(0),
+		is_game_over(false),level(hard_level::easy) {};
+
 	Game::~Game() {};
 
 	void Game::Initial() {
@@ -18,27 +20,27 @@ namespace game {
 
 		survival_pool = prop_pool(
 			{
-				{player_plane,std::list<Prop&>()},
-				{enemy,std::list<Prop&>()},
-				{bullet,std::list<Prop&>()},
-				{tool,std::list<Prop&>()}
+				{prop_type::player_plane,std::list<Prop>()},
+				{prop_type::enemy,std::list<Prop>()},
+				{prop_type::bullet,std::list<Prop>()},
+				{prop_type::tool,std::list<Prop>()}
 			}
 		);
 
 		stat = statistic(
 			{
-				{time_info,0},
-				{beat_num,0},
-				{state_level,1},
-				{tool_num,0}
+				{stat_info::time_info,0},
+				{stat_info::beat_num,0},
+				{stat_info::state_level,1},
+				{stat_info::tool_num,0}
 			});
 
 
 		parameter = game_parameter(
 			{
-				{easy,{2,2,2.}},
-				{medium,{3,1,3.}},
-				{hard,{4,1,4}}
+				{hard_level::easy,{2,2,2.}},
+				{hard_level::medium,{3,1,3.}},
+				{hard_level::hard,{4,1,4}}
 			});
 
 
@@ -47,12 +49,12 @@ namespace game {
 	void Game::Update() {
 		Move_prop();
 
-		is_game_over=Is_collide();
+		is_game_over=Collide_check();
 
 		Generate_plane();
 	}
 
-	void Game::Set_control(int& ct){
+	void Game::Set_control(const int& ct){
 		player_control = ct;
 	}
 
@@ -71,9 +73,34 @@ namespace game {
 		//Draw();
 	}
 
-	bool Game::Is_collide() {
-		for()
+	bool Game::Collide_check() {
+		//
+		return false;
 	}
 
+	void Game::Generate_plane() {
+		//
+	}
 
+	void Game::Move_prop() {
+		//
+	}
+
+	void Game::Play() {
+		Initial();
+		
+		while (1)
+		{
+			Sleep(10);       //pause 10ms;
+			if (_kbhit())
+			{
+				Set_control(_getch());
+
+				Update();
+
+				break;
+
+			}
+		}
+	}
 }

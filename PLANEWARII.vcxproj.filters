@@ -21,9 +21,33 @@
     <ClCompile Include="game.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Prop.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Player_Plane.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Plane.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Prop.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Player_Plane.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Plane.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,22 +6,8 @@
 int main()
 {
 	game::Game game;
-	game.Initial();
-
-		while (1)
-		{
-			Sleep(10);
-			if (_kbhit())
-			{
-				player_control = _getch();
-
-				Update();
-
-				Draw();
-
-			}
-
-		}
+	std::cout << "¡ö";
+	system("pause");
 
 	return 0;
 }

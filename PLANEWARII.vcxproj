@@ -138,11 +138,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy_Plane.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Player_Plane.cpp" />
+    <ClCompile Include="Prop.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy_Plane.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="Plane.h" />
+    <ClInclude Include="Player_Plane.h" />
+    <ClInclude Include="Prop.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
