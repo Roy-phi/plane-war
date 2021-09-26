@@ -3,7 +3,6 @@
 //Author zbt
 //This is a plane war key class: Player_Plane, it is derived from Plane;
 #include "Player_Plane.h"
-#include "Prop.cpp"
 
 namespace player_plane {
 	
@@ -14,19 +13,19 @@ namespace player_plane {
 		{
 		case 'a':
 			Prop::Set_direct(left);
-			Prop::Advance();
+			Prop::Forward();
 			break;
 		case 's':
 			Prop::Set_direct(down);
-			Prop::Advance();
+			Prop::Forward();
 			break;
 		case 'd':
 			Prop::Set_direct(right);
-			Prop::Advance();
+			Prop::Forward();
 			break;
 		case 'w':
 			Prop::Set_direct(up);
-			Prop::Advance();
+			Prop::Forward();
 			break;
 		default:
 			break;
@@ -34,7 +33,7 @@ namespace player_plane {
 		
 	}
 
-	bool Player_Plane::Interact( Prop & anotherp,const int &time) 
+	void Player_Plane::Interact( Prop & anotherp,const int &time) 
 		//interact with enviroment, bullet,tool,and enemy plane
 	{
 		if (Prop::Is_collide(anotherp))
@@ -45,7 +44,7 @@ namespace player_plane {
 				Upgrade();                //catch a tool, can improve level
 			}
 
-			else if (anotherp.Get_type() == "Bullet")
+			else if (anotherp.Get_type() == "Bullet" && !Plane::Is_same_camp(anotherp))
 			{
 				anotherp.Set_hitted(time);
 				Degrade();
@@ -60,5 +59,24 @@ namespace player_plane {
 	const std::string Player_Plane::Get_type()const
 	{
 		return std::string("Player_Plane");
+	}
+	const int Player_Plane::Get_size()const
+	{
+		return static_cast<int>(shape.size());
+	}
+
+	const std::vector<int>& Player_Plane::Get_shape()const
+	{
+		return shape;
+	}
+
+	const std::shared_ptr<prop::Prop> Player_Plane::Shoot(const double& v) const
+	{
+
+		bullet::Bullet* eBullet = new bullet::Bullet(v, up, Prop::Get_position(), "player");
+														//set bullet parameter;
+		std::shared_ptr<Prop> seBullet(eBullet);		//convert to shared_ptr(for safe)
+
+		return seBullet;
 	}
 }

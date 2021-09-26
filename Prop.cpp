@@ -6,7 +6,7 @@
 #include "Prop.h"
 
 namespace prop {
-	void Prop::Advance()
+	void Prop::Forward()
 	{
 		position.X += static_cast<int>(sin(theta) * velocity);
 		position.Y += static_cast<int>(cos(theta) * velocity);
@@ -15,7 +15,7 @@ namespace prop {
 	{
 		COORD pPosition = p.Get_position();
 		int pSize = p.Get_size();
-		return pow((pSize + size), 2) <= 
+		return pow((pSize + Get_size()), 2) <=
 			pow((pPosition.X) - position.X, 2) + pow((pPosition.Y) - position.Y, 2);
 	}
 	bool Prop::Is_destroyed(const int& time)

@@ -10,35 +10,37 @@
 #include <memory>
 #include <math.h>
 #include <string>
+#include <array>
 
 const double PI= 3.1415926535;
-
+class Bullet;
 namespace prop {
 	class Prop
 	{
 	public:
 
-		Prop() = delete;
-		Prop(const int& size, const double& velocity) 
-			:size(size), velocity(velocity) {};
+		Prop(const double& velocity,const double& theta,const COORD posi,const std::string camp) 
+			:velocity(velocity), theta(theta), position(posi),camp(camp) {};
 		
-
 		virtual void Move(const int &control) = 0;
-		void Advance();
+		void Forward();
 
-		virtual void Shoot() = 0;
+		virtual const std::shared_ptr<Prop> Shoot(const double& v)const { return std::shared_ptr<Prop>(); };
 
-		virtual bool Interact( Prop&, const int &time) = 0;
+		virtual void Interact( Prop&, const int &time) = 0;
 
 		virtual const std::string Get_type()const = 0;
+
+		virtual const std::vector<int>& Get_shape() const = 0;
+
+		virtual const int Get_level() const { return 0; };
 
 		bool Is_collide(const Prop&)const ;
 
 		bool Is_destroyed(const int& time);
 
-		const int Get_size() const {
-			return size;
-		} ;
+		virtual const int Get_size() const = 0;
+
 		const COORD Get_position() const {
 			return position;
 		};
@@ -50,6 +52,10 @@ namespace prop {
 			return theta;
 		}
 
+		const std::string& Get_camp() const {
+			return camp;
+		}
+
 		void Set_direct(const double& d);
 
 		void Set_velocity(const double& v);
@@ -59,10 +65,11 @@ namespace prop {
 		void Set_hitted(const int& time);
 
 	private:
-		const int size;
-		COORD position = { 0.,0. };
+		COORD position ;
 
-		int hitted_time=0;
+		const std::string camp;
+
+		int hitted_time=-1;
 		int bomb_time_len=0;
 
 		double velocity;

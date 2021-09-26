@@ -8,7 +8,7 @@
 namespace plane {
 	void Plane::Upgrade()
 	{
-		if (level <3 && level>0) // once set as 0, game over, can't upgrade
+		if (level <highest_level && level>0) // once set as 0, game over, can't upgrade
 		{
 			level += 1;
 		}
@@ -19,6 +19,15 @@ namespace plane {
 		{
 			level -= 1;
 		}
+	}
+	bool Plane::Is_same_camp(const Prop& p)const
+	{
+		return p.Get_camp() == Get_camp();
+	}
+
+	const int Plane::Get_level()const
+	{
+		return level;
 	}
 
 }

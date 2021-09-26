@@ -138,19 +138,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Enemy_Plane.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Player_Plane.cpp" />
     <ClCompile Include="Prop.cpp" />
+    <ClCompile Include="Tool.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Draw.h" />
     <ClInclude Include="Enemy_Plane.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Player_Plane.h" />
     <ClInclude Include="Prop.h" />
+    <ClInclude Include="Tool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
