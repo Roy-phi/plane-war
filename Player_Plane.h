@@ -17,6 +17,8 @@ namespace player_plane {
 			const unsigned int& h_level = 3,const std::string camp="player")
 			:Plane(v, theta, posi,h_level,camp) {};
 		
+		virtual ~Player_Plane() {};
+
 		static const std::shared_ptr<prop::Prop> Generate(const double& v, const COORD& posi)
 		{
 			Player_Plane* newPlane = new Player_Plane(v, PI / 2, posi); //default level=2,camp=player 
@@ -25,6 +27,7 @@ namespace player_plane {
 
 			return pnewPlane;
 		}
+		
 		virtual void  Move(const int &control) final override;
 
 		virtual void  Interact( Prop&,const int & time) final override;

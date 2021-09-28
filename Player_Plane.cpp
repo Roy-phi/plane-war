@@ -8,7 +8,6 @@ namespace player_plane {
 	
 	void Player_Plane::Move(const int &control)
 	{
-
 		switch (control)
 		{
 		case 'a':
@@ -30,7 +29,6 @@ namespace player_plane {
 		default:
 			break;
 		}  ///maybe can use map<char,vector<double>>
-		
 	}
 
 	void Player_Plane::Interact( Prop & anotherp,const int &time) 
@@ -73,7 +71,7 @@ namespace player_plane {
 	const std::shared_ptr<prop::Prop> Player_Plane::Shoot(const double& v) const
 	{
 
-		bullet::Bullet* eBullet = new bullet::Bullet(v, up, Prop::Get_position(), "player");
+		bullet::Bullet* eBullet = new bullet::Bullet(v, down, Prop::Get_position(), "player");
 														//set bullet parameter;
 		std::shared_ptr<Prop> seBullet(eBullet);		//convert to shared_ptr(for safe)
 

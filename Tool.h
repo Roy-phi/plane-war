@@ -13,6 +13,8 @@ namespace tool {
 			const double& dir_theta, const COORD& posi, const std::string camp="neutral")
 			:Prop(v, dir_theta, posi, camp) {};
 
+		virtual ~Tool() {};
+
 		virtual void Move(const int& control);
 
 		virtual const std::string Get_type()const final override;

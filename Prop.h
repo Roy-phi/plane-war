@@ -8,11 +8,9 @@
 #include <Windows.h>
 #include <vector>
 #include <memory>
-#include <math.h>
 #include <string>
-#include <array>
+#include"Public_value.h"
 
-const double PI= 3.1415926535;
 class Bullet;
 namespace prop {
 	class Prop
@@ -21,6 +19,8 @@ namespace prop {
 
 		Prop(const double& velocity,const double& theta,const COORD posi,const std::string camp) 
 			:velocity(velocity), theta(theta), position(posi),camp(camp) {};
+
+		virtual ~Prop() {};
 		
 		virtual void Move(const int &control) = 0;
 		void Forward();

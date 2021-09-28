@@ -11,12 +11,14 @@ namespace prop {
 		position.X += static_cast<int>(sin(theta) * velocity);
 		position.Y += static_cast<int>(cos(theta) * velocity);
 	}
-	bool Prop::Is_collide(const Prop& p)const
+	bool Prop::Is_collide(const Prop& other_p)const
 	{
-		COORD pPosition = p.Get_position();
-		int pSize = p.Get_size();
-		return pow((pSize + Get_size()), 2) <=
-			pow((pPosition.X) - position.X, 2) + pow((pPosition.Y) - position.Y, 2);
+		const int other_size = other_p.Get_size();
+		const COORD& other_posi = other_p.Get_position();
+
+		return (other_posi.Y - position.Y <= other_size) && (position.Y - other_posi.Y >= Get_size()) &&
+			(other_posi.X - position.X <= other_size) && (position.X - other_posi.X >= Get_size());
+			
 	}
 	bool Prop::Is_destroyed(const int& time)
 	{

@@ -15,6 +15,8 @@ namespace bullet {
 		Bullet(const double& v,const double &dir_theta,const COORD& posi,
 			const std::string& camp) 
 			:Prop(v, dir_theta, posi,camp) {};
+
+		virtual ~Bullet() {};
 		
 		virtual void Move(const int& control);
 

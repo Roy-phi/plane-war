@@ -9,18 +9,12 @@
 #include <memory>
 #include "Prop.h"
 
-extern const double PI;
-
 namespace plane {
 	class Plane: public prop::Prop {
 	public:
-		 const double up = PI / 2;
-		 const double down = -PI / 2;
-		 const double left = PI;
-		 const double right = 0;
-
 		Plane(const double &v, const double& theta, const COORD posi,const unsigned int & h_level,const std::string camp) 
 			:Prop(v,theta,posi,camp),highest_level(h_level) {};
+		virtual ~Plane() {};
 		void Upgrade();
 		void Degrade();
 		bool Is_same_camp(const Prop&)const;

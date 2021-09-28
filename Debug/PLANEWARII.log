@@ -1,2 +1,12 @@
-﻿  main.cpp
+﻿  Bullet.cpp
+  Controller.cpp
+  Drawer.cpp
+  Enemy_Plane.cpp
+  game.cpp
+  main.cpp
+  Plane.cpp
+  Player_Plane.cpp
+  Prop.cpp
+  Tool.cpp
+  正在生成代码...
   PLANEWARII.vcxproj -> E:\switch\program\PLANEWARII\Debug\PLANEWARII.exe

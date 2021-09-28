@@ -31,3 +31,4 @@ void SetBackColor()//�����ı�����ɫ
         BACKGROUND_GREEN |
         BACKGROUND_RED);
 }
+

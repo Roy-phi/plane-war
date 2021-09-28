@@ -39,8 +39,11 @@
     <ClCompile Include="Tool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Draw.cpp">
-      <Filter>头文件</Filter>
+    <ClCompile Include="Drawer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,7 +68,13 @@
     <ClInclude Include="Tool.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Draw.h">
+    <ClInclude Include="Drawer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Public_value.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
