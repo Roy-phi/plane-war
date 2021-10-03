@@ -333,25 +333,38 @@ namespace drawer {
 
     void Drawer::Draw_prop(const prop::Prop& p)
     {
+        Set_color(13);
         const COORD posi = p.Get_position();
         std::vector<int> shape= p.Get_shape();
         std::vector<int>::size_type size = shape.size();
         for (std::vector<int>::size_type row = 0; row < size; ++row) {
-            for(unsigned int x= posi.X + (size / 2 - shape[row]);x<posi.X+ (size / 2 + shape[row]);++x)
+            Draw_line(posi.X + (size / 2 - shape[row]), posi.Y + row, 2*shape[row]);
+            /*for(unsigned int x= posi.X + (size / 2 - shape[row]);x<posi.X+ (size / 2 + shape[row]);++x)
             {
                 Draw_point(x,posi.Y+row);
-             }
+             }*/
         }
     }
 
-    void Drawer::Draw_point(const int& x,const int &y) {
+    void Drawer::Draw_point(const unsigned int& x,const unsigned int &y) {
         Set_cursor_position(x,y);
-        cout << "■";
+        //cout << "■";
+        printf_s("■");
+    }
+
+    void Drawer::Draw_line(const unsigned int& x, const unsigned int& y,const  int len) {
+        Set_cursor_position(x, y);
+        //cout << "■";
+        for (unsigned int i = 0; i < len; ++i)
+        {
+            printf_s("■");
+        }
     }
 
     void Drawer::Draw_bomb(const prop::Prop& p) {
         const COORD posi = p.Get_position();
         std::vector<int>::size_type size = p.Get_size();
+
         Set_color(15);
         for (std::vector<int>::size_type row = 0; row < size; ++row) {
             for (unsigned int x = posi.X; x < posi.X + size; ++x)
@@ -359,6 +372,7 @@ namespace drawer {
                 Draw_point(x, posi.Y + row);
             }
         }
+        Set_color(13);
     }
 
     void Drawer::Draw_static( const Controller& game_controller) {

@@ -14,14 +14,14 @@ namespace player_plane {
 	class Player_Plane :public plane::Plane {
 	public:
 		Player_Plane(const double& v, const double& theta, const COORD posi, 
-			const unsigned int& h_level = 3,const std::string camp="player")
-			:Plane(v, theta, posi,h_level,camp) {};
+			 const int& W_limit, const int& H_limit, const unsigned int& h_level = 3,const std::string camp="player")
+			:Plane(v, theta, posi, camp,W_limit,H_limit, h_level) {};
 		
 		virtual ~Player_Plane() {};
 
-		static const std::shared_ptr<prop::Prop> Generate(const double& v, const COORD& posi)
+		static const std::shared_ptr<prop::Prop> Generate(const double& v, const COORD& posi, const int& W_limit, const int& H_limit)
 		{
-			Player_Plane* newPlane = new Player_Plane(v, PI / 2, posi); //default level=2,camp=player 
+			Player_Plane* newPlane = new Player_Plane(v, PI / 2, posi,W_limit,H_limit); //default level=2,camp=player 
 															   //set player plane parameter;
 			std::shared_ptr<Prop> pnewPlane(newPlane);		//convert to shared_ptr(for safe)
 

@@ -8,16 +8,16 @@
 namespace prop {
 	void Prop::Forward()
 	{
-		position.X += static_cast<int>(sin(theta) * velocity);
-		position.Y += static_cast<int>(cos(theta) * velocity);
+		position.X += static_cast<int>(cos(theta) * velocity);
+		position.Y += static_cast<int>(sin(theta) * velocity);
 	}
 	bool Prop::Is_collide(const Prop& other_p)const
 	{
 		const int other_size = other_p.Get_size();
 		const COORD& other_posi = other_p.Get_position();
 
-		return (other_posi.Y - position.Y <= other_size) && (position.Y - other_posi.Y >= Get_size()) &&
-			(other_posi.X - position.X <= other_size) && (position.X - other_posi.X >= Get_size());
+		return (position.Y - other_posi.Y  < other_size) && (other_posi.Y - position.Y < Get_size()) &&
+			(position.X - other_posi.X  < other_size) && (other_posi.X - position.X   < Get_size());
 			
 	}
 	bool Prop::Is_destroyed(const int& time)
@@ -27,6 +27,7 @@ namespace prop {
 	void Prop::Set_hitted(const int& time)
 	{
 		hitted_time = time;
+		is_hitted = true;
 	}
 	void Prop::Set_position(const COORD& posi)
 	{

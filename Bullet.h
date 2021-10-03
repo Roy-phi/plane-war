@@ -13,7 +13,7 @@ namespace bullet {
 	{
 	public:
 		Bullet(const double& v,const double &dir_theta,const COORD& posi,
-			const std::string& camp) 
+			const std::string& camp)
 			:Prop(v, dir_theta, posi,camp) {};
 
 		virtual ~Bullet() {};
@@ -31,6 +31,7 @@ namespace bullet {
 	private:
 		const std::vector<int> shape_enemy = {1,1};
 		const std::vector<int> shape_player = {1,1,1};
+		const int level = 1;
 	};
 }
 #endif // !BULLET

@@ -56,6 +56,8 @@ namespace prop {
 			return camp;
 		}
 
+		const bool Is_hitted()const { return is_hitted; };
+
 		void Set_direct(const double& d);
 
 		void Set_velocity(const double& v);
@@ -70,10 +72,13 @@ namespace prop {
 		const std::string camp;
 
 		int hitted_time=-1;
-		int bomb_time_len=0;
+		int bomb_time_len=3;
 
 		double velocity;
 		double theta;
+
+		bool is_hitted = false;
+
 	};
 }
 

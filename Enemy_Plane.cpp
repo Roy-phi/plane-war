@@ -8,16 +8,25 @@
 namespace enemy_plane {
 	void Enemy_Plane::Move(const int &control)
 	{
-		std::default_random_engine random;
-		std::uniform_real_distribution<double> v(0.0, 2 * Get_velocity());
-		std::uniform_real_distribution<double> dir(0.0, Get_velocity());
+		//std::default_random_engine random;
+		std::random_device rd;  // Will be used to obtain a seed for the random number engine
+		std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
+		std::uniform_real_distribution<> dis(0.0, 2.0*PI);
+		//std::uniform_real_distribution<double> v(0.0,  1.5*Get_velocity());
+		//std::uniform_real_distribution<double> dir(0.0, 2*PI);
 
-		Prop::Set_direct(dir(random));
-		Prop::Set_velocity(v(random));
+		
+		Prop::Set_direct(Prop::Get_dir()+dis(gen));
+		
+		//Prop::Set_velocity(v(random));
 
 		Prop::Forward();
+
+		Plane::Restrict_move_range(Get_size());
+
 		//maybe boundry check here;
 	}
+
 	void Enemy_Plane::Interact(Prop& anotherp, const int& time)
 	{
 		if (Prop::Is_collide(anotherp))
@@ -54,7 +63,10 @@ namespace enemy_plane {
 
 	const std::shared_ptr<prop::Prop> Enemy_Plane::Shoot(const double& v) const
 	{
-		bullet::Bullet* eBullet = new bullet::Bullet(v, Prop::Get_dir(), Prop::Get_position(), "enemy");
+		COORD posi = Prop::Get_position();
+		posi.X += Get_size()/2-1;
+
+		bullet::Bullet* eBullet = new bullet::Bullet(v, up , posi, "enemy");
 														//set bullet parameter;
 		std::shared_ptr<Prop> seBullet(eBullet);		//convert to shared_ptr(for safe)
 																			

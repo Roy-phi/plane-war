@@ -12,17 +12,20 @@
 namespace plane {
 	class Plane: public prop::Prop {
 	public:
-		Plane(const double &v, const double& theta, const COORD posi,const unsigned int & h_level,const std::string camp) 
-			:Prop(v,theta,posi,camp),highest_level(h_level) {};
+		Plane(const double &v, const double& theta, const COORD posi,const std::string camp,const int& W_limit, const int& H_limit,const unsigned int& h_level)
+			:Prop(v,theta,posi,camp),highest_level(h_level),w_limit(W_limit),h_limit(H_limit) {};
 		virtual ~Plane() {};
 		void Upgrade();
 		void Degrade();
 		bool Is_same_camp(const Prop&)const;
+		void Restrict_move_range(const int& size);
 		virtual const int Get_level()const;
 
 	private:
-		unsigned int level = 1;  // plane level range is 0-3, if set to 0, game over
+		unsigned int level = 1;  // player plane level range is 0-higest_level, if set to 0, game over,enemy also has level
 		unsigned int highest_level;
+		int w_limit;
+		int h_limit;
 	};
 }
 

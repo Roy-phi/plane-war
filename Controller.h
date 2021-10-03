@@ -43,6 +43,9 @@ namespace controller {
 		void Beat_enemy_add() { ++(stat[stat_info::beat_num]); };
 		void Catch_tool_add() { ++(stat[stat_info::tool_num]); };
 
+		void Set_player_plane_level(const int lel) { plane_level = lel; };
+
+
 		//Get function
 		const bool Is_excit()const { return excit; };
 
@@ -55,6 +58,8 @@ namespace controller {
 		const bool Is_game_over() const {return is_game_over;};
 
 		const hard_level Get_hard_level() const { return level; };
+
+
 	
 		const int Get_beat_num()const  { 
 			auto it = stat.find(stat_info::beat_num);
@@ -86,6 +91,8 @@ namespace controller {
 
 		const double Get_bullet_vel(){ return std::get<2>(parameter[level]); }
 
+		const int Get_player_plane_level()const { return plane_level; }
+
 		posi_set screen_posi;          //position set, 8 direct
 
 	private:
@@ -96,6 +103,8 @@ namespace controller {
 		bool excit = false;					//tag if excit
 
 		hard_level level = hard_level::easy;
+
+		int plane_level;
 
 		statistic stat;
 

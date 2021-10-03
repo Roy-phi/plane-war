@@ -15,7 +15,7 @@ namespace player_plane {
 			Prop::Forward();
 			break;
 		case 's':
-			Prop::Set_direct(down);
+			Prop::Set_direct(up);
 			Prop::Forward();
 			break;
 		case 'd':
@@ -23,12 +23,13 @@ namespace player_plane {
 			Prop::Forward();
 			break;
 		case 'w':
-			Prop::Set_direct(up);
+			Prop::Set_direct(down);
 			Prop::Forward();
 			break;
 		default:
 			break;
 		}  ///maybe can use map<char,vector<double>>
+		Plane::Restrict_move_range(Get_size());
 	}
 
 	void Player_Plane::Interact( Prop & anotherp,const int &time) 
@@ -58,6 +59,7 @@ namespace player_plane {
 	{
 		return std::string("Player_Plane");
 	}
+
 	const int Player_Plane::Get_size()const
 	{
 		return static_cast<int>(shape.size());
@@ -70,8 +72,10 @@ namespace player_plane {
 
 	const std::shared_ptr<prop::Prop> Player_Plane::Shoot(const double& v) const
 	{
+		COORD posi = Prop::Get_position();
+		posi.X += Get_size() / 2-1;
 
-		bullet::Bullet* eBullet = new bullet::Bullet(v, down, Prop::Get_position(), "player");
+		bullet::Bullet* eBullet = new bullet::Bullet(v, down, posi, "player");
 														//set bullet parameter;
 		std::shared_ptr<Prop> seBullet(eBullet);		//convert to shared_ptr(for safe)
 

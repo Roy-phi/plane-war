@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <conio.h>
 #include "Prop.h"
+#include "Tool.h"
 
 
 namespace game {
@@ -126,7 +127,7 @@ namespace game {
 		//check if  pool bullet bomb, erase it and add to bomb list;
 		for (auto bullet_it = Bullet_List.begin(); bullet_it != Bullet_List.end();)
 		{
-			if ((*bullet_it)->Get_level()<=0)
+			if ((*bullet_it)->Is_hitted())
 			{
 				bomb_Bullet_List.push_back(*bullet_it);
 				bullet_it = Bullet_List.erase(bullet_it);
@@ -160,20 +161,10 @@ namespace game {
 		}
 
 		//check if tool move out of the screen, erase it;
-		for (auto tool_it = Tool_List.begin(); tool_it != Tool_List.end();)
-		{
-			if (Is_move_out(*tool_it))
-			{
-				tool_it = Tool_List.erase(tool_it);
-			}
-			else {
-				++tool_it;
-			}
-		}
 		//check if tool catched by plane, erase it;
 		for (auto tool_it = Tool_List.begin(); tool_it != Tool_List.end();)
 		{
-			if ((*tool_it)->Is_destroyed(game_controller.Get_time()))
+			if (Is_move_out(*tool_it)|| (*tool_it)->Is_hitted())
 			{
 				tool_it = Tool_List.erase(tool_it);
 			}
@@ -181,6 +172,7 @@ namespace game {
 				++tool_it;
 			}
 		}
+		
 	}
 
 	void Game::Draw_battle_filed() {
@@ -212,6 +204,7 @@ namespace game {
 		game_drawer.Draw_start_menu(game_controller);
 		if (!game_controller.Is_excit())
 		{
+			Initial();
 			game_drawer.Draw_select(game_controller);
 		}
 
@@ -236,7 +229,7 @@ namespace game {
 			//shoot
 			if (game_controller.Get_control() == 'k' && game_controller.Get_time() % 1 == 0)
 			{
-				survival_pool[prop_type::bullet].push_back((player_plane->Shoot(4)));
+				Bullet_List.push_back((player_plane->Shoot(2)));
 			}
 
 			//interact with bullet
@@ -255,6 +248,7 @@ namespace game {
 				player_plane->Interact((*tool), game_controller.Get_time());
 			}
 			//if player plane level<=0,means destroyed,game over
+			game_controller.Set_player_plane_level(player_plane->Get_level());
 			if (player_plane->Get_level() <= 0)
 			{
 				return true;
@@ -266,10 +260,9 @@ namespace game {
 		{
 			//cause player plane interacted with enemy plane before, so ignore here;
 			//shoot
-			if (game_controller.Get_time() % 1 == 0)
+			if (game_controller.Get_time() % 80 < 8 && game_controller.Get_time() % 3==0)
 			{
-				++i;
-				survival_pool[prop_type::bullet].push_back(e_plane->Shoot(4));
+				survival_pool[prop_type::bullet].push_back(e_plane->Shoot(1.5));
 			}
 			//interact with bullet
 			for (auto& bullet : Bullet_List)
@@ -289,6 +282,8 @@ namespace game {
 
 				e_plane->Set_hitted(game_controller.Get_time());
 
+				game_controller.Beat_enemy_add();
+
 			}
 		}
 		return false;
@@ -299,18 +294,32 @@ namespace game {
 		while (survival_pool[prop_type::player_plane].size() < 1)
 		{
 			survival_pool[prop_type::player_plane].push_back(
-				player_plane::Player_Plane::Generate(3, game_controller.screen_posi[posi_type::down]));
+				player_plane::Player_Plane::Generate(2.5, game_controller.screen_posi[posi_type::down],game_controller.Get_screen_w(),game_controller.Get_screen_h()));
 		}
-		while (survival_pool[prop_type::enemy].size() + bomb_pool[prop_type::enemy].size()
-			< game_controller.Get_enemy_num())
+		while (survival_pool[prop_type::enemy].size() + bomb_pool[prop_type::enemy].size()+2
+			<= game_controller.Get_enemy_num())
 		{
 			survival_pool[prop_type::enemy].push_back(
-				enemy_plane::Enemy_Plane::Generate(2, game_controller.screen_posi[posi_type::up]));
+				enemy_plane::Enemy_Plane::Generate(1.5, game_controller.screen_posi[posi_type::left_up],game_controller.Get_screen_w(), game_controller.Get_screen_h()));
+			survival_pool[prop_type::enemy].push_back(
+				enemy_plane::Enemy_Plane::Generate(1.5, game_controller.screen_posi[posi_type::up_right], game_controller.Get_screen_w(), game_controller.Get_screen_h()));
 		}
+
+		if (game_controller.Get_time() % 50 == 0)
+		{
+			while (survival_pool[prop_type::tool].size() + bomb_pool[prop_type::tool].size()
+				< game_controller.Get_tool_num())
+			{
+				survival_pool[prop_type::tool].push_back(
+					tool::Tool::Generate(0, game_controller.screen_posi[posi_type::right_down]));
+			}
+		}
+
 	}
 
 	void Game::Move_prop() {
 		//move every props in pool
+
 		for (auto &list_pool : survival_pool)
 		{
 			for (auto& p : list_pool.second) //iterat in list(pair->second)
@@ -318,6 +327,7 @@ namespace game {
 				p->Move(game_controller.Get_control());      //control player plane,and will be ignored by others
 			}
 		}
+
 	}
 
 	void Game::Play() {
@@ -328,7 +338,7 @@ namespace game {
 		
 		while (!game_controller.Is_excit())
 		{
-			Sleep(1000);       //pause 10ms
+			Sleep(10);       //pause 10ms
 
 			game_controller.Time_add();          //time unit : 10ms;
 
@@ -341,10 +351,11 @@ namespace game {
 					game_controller.Excit();
 				}
 			}
-
+			
 			Update();
+			game_controller.Set_control(0);
 		}
 
-		std::cout << "game excit" << std::endl;
+		//std::cout << "game excit" << std::endl;
 	}
 }

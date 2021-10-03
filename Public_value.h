@@ -29,7 +29,7 @@ struct posi_set {
 			{ posi_type::right,       {static_cast<short>(screen_w *0.9),static_cast<short>(screen_h * 0.5)} },
 			{ posi_type::down_left,   {static_cast<short>(screen_w *0.9),static_cast<short>(screen_h * 0.1)} },
 			{ posi_type::left_up,     {static_cast<short>(screen_w *0.1),static_cast<short>(screen_h * 0.1)} },
-			{ posi_type::up_right,    {static_cast<short>(screen_w *0.9),static_cast<short>(screen_h * 0.5)} },
+			{ posi_type::up_right,    {static_cast<short>(screen_w *0.9),static_cast<short>(screen_h * 0.1)} },
 			{ posi_type::right_down,  {static_cast<short>(screen_w *0.9),static_cast<short>(screen_h * 0.9)} }
 			}
 		);

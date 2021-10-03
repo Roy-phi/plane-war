@@ -29,5 +29,10 @@ namespace plane {
 	{
 		return level;
 	}
-
+	void Plane::Restrict_move_range(const int &size) {
+		COORD posi;
+		posi.X = min(w_limit - size, max(0, Prop::Get_position().X));
+		posi.Y = min(h_limit - size, max(0, Prop::Get_position().Y));
+		Prop::Set_position(posi);
+	}
 }

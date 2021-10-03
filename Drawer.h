@@ -42,8 +42,8 @@ namespace drawer {
 		void Draw_info(const int i);
 
 	private:
-		void Draw_point(const int& x, const int& y);
-
+		void Draw_point(const unsigned int& x, const unsigned int& y);
+		void Draw_line(const unsigned int& x, const unsigned int& y, const  int len);
 		void Set_window_size(const int& screen_H, const int& screen_W);
 
 		void Set_cursor_position(const COORD& posi);
