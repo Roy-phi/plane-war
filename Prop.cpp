@@ -8,8 +8,10 @@
 namespace prop {
 	void Prop::Forward()
 	{
-		position.X += static_cast<int>(cos(theta) * velocity);
-		position.Y += static_cast<int>(sin(theta) * velocity);
+		x += cos(theta) * velocity;
+		y += sin(theta) * velocity;
+		position.X = static_cast<int>(x);
+		position.Y = static_cast<int>(y);
 	}
 	bool Prop::Is_collide(const Prop& other_p)const
 	{
@@ -32,6 +34,8 @@ namespace prop {
 	void Prop::Set_position(const COORD& posi)
 	{
 		position = posi;
+		x = posi.X;
+		y = posi.Y;
 	};
 	void Prop::Set_direct(const double& d)
 	{

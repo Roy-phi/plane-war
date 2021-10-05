@@ -14,14 +14,14 @@ namespace player_plane {
 	class Player_Plane :public plane::Plane {
 	public:
 		Player_Plane(const double& v, const double& theta, const COORD posi, 
-			 const int& W_limit, const int& H_limit, const unsigned int& h_level = 3,const std::string camp="player")
-			:Plane(v, theta, posi, camp,W_limit,H_limit, h_level) {};
+			const int &color, const int& W_limit, const int& H_limit, const unsigned int& h_level = 3,const std::string camp="player")
+			:Plane(v, theta, posi, camp,color,W_limit,H_limit, h_level) {};
 		
 		virtual ~Player_Plane() {};
 
 		static const std::shared_ptr<prop::Prop> Generate(const double& v, const COORD& posi, const int& W_limit, const int& H_limit)
 		{
-			Player_Plane* newPlane = new Player_Plane(v, PI / 2, posi,W_limit,H_limit); //default level=2,camp=player 
+			Player_Plane* newPlane = new Player_Plane(v, PI / 2, posi,Player_plane_blue,W_limit,H_limit); //default level=2,camp=player 
 															   //set player plane parameter;
 			std::shared_ptr<Prop> pnewPlane(newPlane);		//convert to shared_ptr(for safe)
 
@@ -43,7 +43,7 @@ namespace player_plane {
 	private:
 
 
-		const std::vector<int> shape = { 1,1,4,4,1,1,1,3 }; //const shape
+		const std::vector<int> shape = { 1,1,4,4,2,1,1,3 }; //const shape
 	};
 }
 #endif // !PLAYER_PLANE_H

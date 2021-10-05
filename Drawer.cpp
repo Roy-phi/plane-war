@@ -320,7 +320,8 @@ namespace drawer {
     {
         Set_color(3);
         Set_cursor_position(40, 26);
-        cout << " I will teach you the rules, and please press enter";
+        cout << " So easy!!! press a: left, d: right, w: up, s: down, k: shoot";
+
         int key;
         while (key = _getch())
         {
@@ -333,28 +334,22 @@ namespace drawer {
 
     void Drawer::Draw_prop(const prop::Prop& p)
     {
-        Set_color(13);
+        Set_color(p.Get_color());
         const COORD posi = p.Get_position();
         std::vector<int> shape= p.Get_shape();
         std::vector<int>::size_type size = shape.size();
         for (std::vector<int>::size_type row = 0; row < size; ++row) {
             Draw_line(posi.X + (size / 2 - shape[row]), posi.Y + row, 2*shape[row]);
-            /*for(unsigned int x= posi.X + (size / 2 - shape[row]);x<posi.X+ (size / 2 + shape[row]);++x)
-            {
-                Draw_point(x,posi.Y+row);
-             }*/
         }
     }
 
     void Drawer::Draw_point(const unsigned int& x,const unsigned int &y) {
         Set_cursor_position(x,y);
-        //cout << "■";
         printf_s("■");
     }
 
     void Drawer::Draw_line(const unsigned int& x, const unsigned int& y,const  int len) {
         Set_cursor_position(x, y);
-        //cout << "■";
         for (unsigned int i = 0; i < len; ++i)
         {
             printf_s("■");
@@ -365,32 +360,72 @@ namespace drawer {
         const COORD posi = p.Get_position();
         std::vector<int>::size_type size = p.Get_size();
 
-        Set_color(15);
+        Set_color(p.Get_color());
         for (std::vector<int>::size_type row = 0; row < size; ++row) {
             for (unsigned int x = posi.X; x < posi.X + size; ++x)
             {
                 Draw_point(x, posi.Y + row);
             }
         }
-        Set_color(13);
     }
 
     void Drawer::Draw_static( const Controller& game_controller) {
-        Set_cursor_position(0, 0);
+        Set_color(Other_color);
+        int X = 20;
+        Set_cursor_position(X, 0);
         cout << " BEAT PLANE NUM: " << game_controller.Get_beat_num();
-        Set_cursor_position(0, 1);
-        cout << " CATCH TOOL NUM: " << game_controller.Get_catch_tool_num();
-        Set_cursor_position(0, 2);
-        cout << " time: " << game_controller.Get_time();
+        Set_cursor_position(X, 1);
+        cout << " CURRENT LEVEL: " << game_controller.Get_state();
+        Set_cursor_position(X, 2);
+        cout << " PLAYER HP: " << game_controller.Get_player_plane_level();
+        Set_cursor_position(X, 3);
+        cout << " time: " << game_controller.Get_time()/10;
     }
 
     void Drawer::Draw_info(const int i)
     {
+        Set_color(Other_color);
         Set_cursor_position(0, 3);
-        cout << " info : " << i;
     }
 
     void Drawer::Draw_clear()const {
         system("cls");
+    }
+
+    void Drawer::Draw_game_over( Controller& game_controller) {
+        Draw_clear();
+        COORD posi = game_controller.screen_posi[posi_type::up];
+        Set_cursor_position(posi);
+        cout << " ***** GAME OVER !!! *****" << std::endl;
+        posi.Y += 1;
+        Set_cursor_position(posi);
+        cout << " ***** GAME OVER !!! *****" << std::endl;
+        posi.Y += 1;
+        Set_cursor_position(posi);
+        cout << " ***** GAME OVER !!! *****" << std::endl;
+        posi.Y += 1;
+        Set_cursor_position(posi);
+        cout << " BEAT PLANE NUM: " << game_controller.Get_beat_num() << std::endl;
+        posi.Y += 1;
+        Set_cursor_position(posi);
+        cout << " time: " << game_controller.Get_time() / 100 <<std::endl;
+        posi.Y += 1;
+        Set_cursor_position(posi);
+        cout << " PRESS ENTER OR Q TO CONTINUE ...... "<< std::endl;
+        bool flag = true;
+        while (flag)
+        {
+            Sleep(10);       //pause 10ms
+
+            if (_kbhit())
+            {
+                game_controller.Set_control(_getch());
+                if (game_controller.Get_control() == 13 || game_controller.Get_control() == 'Q')
+                {
+                    flag = false;
+                }
+            }
+        }
+
     }
 }

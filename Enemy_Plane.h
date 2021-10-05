@@ -13,14 +13,14 @@ namespace enemy_plane {
 	class Enemy_Plane :public plane::Plane {
 	public:
 		Enemy_Plane(const double& v, const double& theta, const COORD posi,
-			const int& W_limit, const int& H_limit, const unsigned int& h_level = 2, const std::string camp = "enemy")
-			:Plane(v, theta, posi, camp, W_limit, H_limit, h_level) {};
+			const int& color,const int& W_limit, const int& H_limit, const unsigned int& h_level = 2, const std::string camp = "enemy")
+			:Plane(v, theta, posi, camp,color, W_limit, H_limit, h_level) {};
 
 		virtual ~Enemy_Plane() {};
 
 		static const std::shared_ptr<prop::Prop> Generate(const double& v, const COORD& posi, const int& W_limit, const int& H_limit)
 		{
-			Enemy_Plane* newPlane = new Enemy_Plane(v, PI / 2, posi, W_limit, H_limit); //default level=2,camp=player 
+			Enemy_Plane* newPlane = new Enemy_Plane(v,up, posi,Enemy_plane_green, W_limit, H_limit); //default level=2,camp=player 
 															   //set player plane parameter;
 			std::shared_ptr<Prop> pnewPlane(newPlane);		//convert to shared_ptr(for safe)
 
@@ -41,7 +41,7 @@ namespace enemy_plane {
 
 	private:
 
-		const std::vector<int> shape = { 2,1,2,2,1,1}; //const shape
+		const std::vector<int> shape = { 2,1,2,3,1,1}; //const shape
 	};
 }
 

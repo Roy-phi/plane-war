@@ -1,2 +1,6 @@
-﻿  Enemy_Plane.cpp
+﻿  Drawer.cpp
+E:\switch\program\PLANEWARII\Drawer.cpp(352,36): warning C4018: “<”: 有符号/无符号不匹配
+  Player_Plane.cpp
+  game.cpp
+  正在生成代码...
   PLANEWARII.vcxproj -> E:\switch\program\PLANEWARII\Debug\PLANEWARII.exe

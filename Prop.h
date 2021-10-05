@@ -17,8 +17,8 @@ namespace prop {
 	{
 	public:
 
-		Prop(const double& velocity,const double& theta,const COORD posi,const std::string camp) 
-			:velocity(velocity), theta(theta), position(posi),camp(camp) {};
+		Prop(const double& velocity,const double& theta,const COORD posi,const std::string camp,const int &color) 
+			:velocity(velocity), theta(theta), position(posi),camp(camp),color(color),x(posi.X),y(posi.Y) {};
 
 		virtual ~Prop() {};
 		
@@ -26,12 +26,17 @@ namespace prop {
 		void Forward();
 
 		virtual const std::shared_ptr<Prop> Shoot(const double& v)const { return std::shared_ptr<Prop>(); };
+		//Abstract factory class
 
 		virtual void Interact( Prop&, const int &time) = 0;
 
 		virtual const std::string Get_type()const = 0;
 
 		virtual const std::vector<int>& Get_shape() const = 0;
+
+		virtual int Get_color()const {
+			return color;
+		};
 
 		virtual const int Get_level() const { return 0; };
 
@@ -73,9 +78,12 @@ namespace prop {
 
 		int hitted_time=-1;
 		int bomb_time_len=3;
+		int color;
 
 		double velocity;
 		double theta;
+		double x;
+		double y; //x,y is true position, and COORD position is discrete 
 
 		bool is_hitted = false;
 

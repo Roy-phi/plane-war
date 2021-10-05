@@ -11,20 +11,17 @@ namespace enemy_plane {
 		//std::default_random_engine random;
 		std::random_device rd;  // Will be used to obtain a seed for the random number engine
 		std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-		std::uniform_real_distribution<> dis(0.0, 2.0*PI);
+		std::normal_distribution<> dis(-0.3, 0.3);
 		//std::uniform_real_distribution<double> v(0.0,  1.5*Get_velocity());
 		//std::uniform_real_distribution<double> dir(0.0, 2*PI);
 
 		
 		Prop::Set_direct(Prop::Get_dir()+dis(gen));
-		
-		//Prop::Set_velocity(v(random));
 
 		Prop::Forward();
 
-		Plane::Restrict_move_range(Get_size());
+		//Plane::Restrict_move_range(Get_size());
 
-		//maybe boundry check here;
 	}
 
 	void Enemy_Plane::Interact(Prop& anotherp, const int& time)
@@ -40,8 +37,11 @@ namespace enemy_plane {
 			else if (anotherp.Get_type() == "Bullet" && !Plane::Is_same_camp(anotherp))
 			{
 				//if(bullet belong to Player)
-				anotherp.Set_hitted(time);
-				Degrade();
+				if (!anotherp.Is_hitted())
+				{
+					anotherp.Set_hitted(time);
+					Degrade();
+				}
 			}
 		}
 	}
@@ -66,7 +66,7 @@ namespace enemy_plane {
 		COORD posi = Prop::Get_position();
 		posi.X += Get_size()/2-1;
 
-		bullet::Bullet* eBullet = new bullet::Bullet(v, up , posi, "enemy");
+		bullet::Bullet* eBullet = new bullet::Bullet(v, up , posi,Bullet_enemy_green, "enemy");
 														//set bullet parameter;
 		std::shared_ptr<Prop> seBullet(eBullet);		//convert to shared_ptr(for safe)
 																			

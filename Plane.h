@@ -12,8 +12,8 @@
 namespace plane {
 	class Plane: public prop::Prop {
 	public:
-		Plane(const double &v, const double& theta, const COORD posi,const std::string camp,const int& W_limit, const int& H_limit,const unsigned int& h_level)
-			:Prop(v,theta,posi,camp),highest_level(h_level),w_limit(W_limit),h_limit(H_limit) {};
+		Plane(const double &v, const double& theta, const COORD posi,const std::string camp,const int & color,const int& W_limit, const int& H_limit,const unsigned int& h_level)
+			:Prop(v,theta,posi,camp,color),highest_level(h_level),w_limit(W_limit),h_limit(H_limit) {};
 		virtual ~Plane() {};
 		void Upgrade();
 		void Degrade();

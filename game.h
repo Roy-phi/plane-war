@@ -15,6 +15,7 @@
 #include <tuple>
 #include <memory>
 #include <iostream>
+#include<random>
 
 namespace game {
 	static int i = 0;
@@ -72,6 +73,8 @@ namespace game {
 		controller::Controller game_controller;
 
 		drawer::Drawer game_drawer;
+
+
 
 	};
 }

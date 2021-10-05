@@ -45,8 +45,11 @@ namespace player_plane {
 
 			else if (anotherp.Get_type() == "Bullet" && !Plane::Is_same_camp(anotherp))
 			{
-				anotherp.Set_hitted(time);
-				Degrade();
+				if (!anotherp.Is_hitted())
+				{
+					anotherp.Set_hitted(time);
+					Degrade();
+				}
 			}
 			else if(anotherp.Get_type() == "Enemy_Plane")
 			{
@@ -55,6 +58,7 @@ namespace player_plane {
 			}
 		}
 	}
+
 	const std::string Player_Plane::Get_type()const
 	{
 		return std::string("Player_Plane");
@@ -75,7 +79,7 @@ namespace player_plane {
 		COORD posi = Prop::Get_position();
 		posi.X += Get_size() / 2-1;
 
-		bullet::Bullet* eBullet = new bullet::Bullet(v, down, posi, "player");
+		bullet::Bullet* eBullet = new bullet::Bullet(v, down, posi,Bullet_player_blue, "player");
 														//set bullet parameter;
 		std::shared_ptr<Prop> seBullet(eBullet);		//convert to shared_ptr(for safe)
 

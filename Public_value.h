@@ -9,7 +9,7 @@
 enum class prop_type { player_plane, enemy, bullet, tool };
 enum class hard_level { easy, medium, hard ,extreme_hard};
 enum class stat_info { time_info, beat_num, state_level, tool_num };
-enum class posi_type { down, left, up, right, down_left, left_up, up_right, right_down };
+enum class posi_type { down, down_left, right_down,left, up, right, left_up, up_right };
 
 // const value
 const double PI = 3.1415926535;
@@ -18,19 +18,32 @@ const double down = -PI / 2;
 const double left = PI;
 const double right = 0;
 
+//color
+const int Player_plane_blue = FOREGROUND_BLUE;
+const int Enemy_plane_green = FOREGROUND_GREEN;
+const int Bullet_player_blue = FOREGROUND_BLUE;
+const int Bullet_enemy_green = FOREGROUND_GREEN;
+const int Tool_red = FOREGROUND_RED;
+const int Other_color = FOREGROUND_GREEN;
+
+const double low = 0.2;
+const double high = 0.8;
+const double middle = 0.5;
+
 struct posi_set {
 	posi_set(const int& screen_H, const int& screen_W)
 		:screen_h(screen_H), screen_w(screen_W){
 		p_set = std::map<posi_type, COORD>(
 			{ 
-			{ posi_type::down,        {static_cast<short>(screen_w *0.5),static_cast<short>(screen_h * 0.9)} },
-			{ posi_type::left,        {static_cast<short>(screen_w *0.1),static_cast<short>(screen_h * 0.5)} },
-			{ posi_type::up,          {static_cast<short>(screen_w *0.5),static_cast<short>(screen_h * 0.1)} },
-			{ posi_type::right,       {static_cast<short>(screen_w *0.9),static_cast<short>(screen_h * 0.5)} },
-			{ posi_type::down_left,   {static_cast<short>(screen_w *0.9),static_cast<short>(screen_h * 0.1)} },
-			{ posi_type::left_up,     {static_cast<short>(screen_w *0.1),static_cast<short>(screen_h * 0.1)} },
-			{ posi_type::up_right,    {static_cast<short>(screen_w *0.9),static_cast<short>(screen_h * 0.1)} },
-			{ posi_type::right_down,  {static_cast<short>(screen_w *0.9),static_cast<short>(screen_h * 0.9)} }
+			{ posi_type::down,        {static_cast<short>(screen_w *middle),static_cast<short>(screen_h * high)} },
+			{ posi_type::down_left,   {static_cast<short>(screen_w * low),static_cast<short>(screen_h * high)} },
+			{ posi_type::right_down,  {static_cast<short>(screen_w * high),static_cast<short>(screen_h * high)} },
+			{ posi_type::left,        {static_cast<short>(screen_w *low),static_cast<short>(screen_h * middle)} },
+			{ posi_type::up,          {static_cast<short>(screen_w *middle),static_cast<short>(screen_h * low)} },
+			{ posi_type::right,       {static_cast<short>(screen_w *high),static_cast<short>(screen_h * middle)} },
+			{ posi_type::left_up,     {static_cast<short>(screen_w *low),static_cast<short>(screen_h * low)} },
+			{ posi_type::up_right,    {static_cast<short>(screen_w *high),static_cast<short>(screen_h * low)} }
+
 			}
 		);
 	};

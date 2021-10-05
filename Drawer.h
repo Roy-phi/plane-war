@@ -41,6 +41,8 @@ namespace drawer {
 		void Draw_clear()const;
 		void Draw_info(const int i);
 
+		void Draw_game_over( Controller& game_controller);
+
 	private:
 		void Draw_point(const unsigned int& x, const unsigned int& y);
 		void Draw_line(const unsigned int& x, const unsigned int& y, const  int len);

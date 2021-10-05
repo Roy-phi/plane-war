@@ -8,7 +8,7 @@ int main()
 {
 
 
-	game::Game game(80,80);
+	game::Game game(50,80);
 
 	game.Play();
 

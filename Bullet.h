@@ -13,8 +13,8 @@ namespace bullet {
 	{
 	public:
 		Bullet(const double& v,const double &dir_theta,const COORD& posi,
-			const std::string& camp)
-			:Prop(v, dir_theta, posi,camp) {};
+			const int & color,const std::string& camp)
+			:Prop(v, dir_theta, posi,camp, color) {};
 
 		virtual ~Bullet() {};
 		

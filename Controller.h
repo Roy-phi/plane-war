@@ -8,6 +8,7 @@
 #define CONTROLLER_H
 #include "Public_value.h"
 #include <unordered_map>
+#include <random>
 
 
 
@@ -21,7 +22,7 @@ namespace controller {
 		using statistic = std::unordered_map<stat_info, int>;
 		//statistics info
 
-		using game_parameter = std::unordered_map<hard_level, std::tuple<unsigned int, unsigned int, double>>;
+		using game_parameter = std::unordered_map<hard_level, std::tuple<unsigned int, unsigned int, double, double>>;
 		//contain enemy nums, tool nums, bullet velocity
 
 		Controller(const int& screen_H, const int& screen_W) 
@@ -40,7 +41,15 @@ namespace controller {
 
 		void Set_game_over() { is_game_over = true; };
 
-		void Beat_enemy_add() { ++(stat[stat_info::beat_num]); };
+		void Beat_enemy_add() { 
+			++(stat[stat_info::beat_num]); 
+			if (stat[stat_info::beat_num] == 5 ||
+				stat[stat_info::beat_num] == 10)
+			{
+				Improve_difficulty();
+			}
+		};
+
 		void Catch_tool_add() { ++(stat[stat_info::tool_num]); };
 
 		void Set_player_plane_level(const int lel) { plane_level = lel; };
@@ -59,8 +68,10 @@ namespace controller {
 
 		const hard_level Get_hard_level() const { return level; };
 
+		void Improve_difficulty();
 
-	
+		const bool Shoot_or_not_e() { return time % 100 < 10 && time % 3 == 0; };
+		const bool Is_generate_tool() { return time % 500 == 0; };
 		const int Get_beat_num()const  { 
 			auto it = stat.find(stat_info::beat_num);
 			if (it != stat.end()) {
@@ -90,14 +101,19 @@ namespace controller {
 		const unsigned int Get_enemy_num() { return std::get<0>(parameter[level]); };
 
 		const double Get_bullet_vel(){ return std::get<2>(parameter[level]); }
-
+		const double Get_enemy_plane_vel() { return std::get<3>(parameter[level]); }
 		const int Get_player_plane_level()const { return plane_level; }
+		const int Get_frame_time() { return frame_time; }
+
+		COORD Get_random_posi();
+
+
 
 		posi_set screen_posi;          //position set, 8 direct
 
 	private:
 		int time = 0;					//global time;
-		unsigned int state = 0;				//level 1, 2, 3
+		unsigned int state = 1;				//level 1, 2, 3
 		int player_control = 0;
 		bool is_game_over = false;			//game over 
 		bool excit = false;					//tag if excit
@@ -112,6 +128,8 @@ namespace controller {
 
 		const int screen_h;
 		const int screen_w;				//window size
+
+		const int frame_time=10;   //each frame interval time, (ms)
 	};
 }
 

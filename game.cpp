@@ -85,7 +85,7 @@ namespace game {
 
 		const COORD& posi = (*p).Get_position();
 		const int& size = (*p).Get_size();
-		return posi.X <= 0 || posi.Y <= 0 || (posi.X + size) >= game_controller.Get_screen_w() || (posi.Y + size) >= game_controller.Get_screen_h();
+		return posi.X < -size/2 || posi.Y < -size / 2 || (posi.X + size/2) > game_controller.Get_screen_w() || (posi.Y + size/2) > game_controller.Get_screen_h();
 	}
 
 	void Game::Clean_battle_field()
@@ -105,6 +105,18 @@ namespace game {
 			if ((*plane_it)->Get_level() <= 0)
 			{
 				bomb_Enemy_Plane_List.push_back(*plane_it);
+				plane_it = Enemy_Plane_List.erase(plane_it);
+			}
+			else {
+				++plane_it;
+			}
+		}
+
+		//check if enemy plane move out, erase it from list
+		for (auto plane_it = Enemy_Plane_List.begin(); plane_it != Enemy_Plane_List.end();)
+		{
+			if (Is_move_out(*plane_it))
+			{
 				plane_it = Enemy_Plane_List.erase(plane_it);
 			}
 			else {
@@ -201,6 +213,8 @@ namespace game {
 	void Game::Game_over()
 	{
 		//Draw();
+		game_drawer.Draw_game_over(game_controller);
+
 		game_drawer.Draw_start_menu(game_controller);
 		if (!game_controller.Is_excit())
 		{
@@ -227,9 +241,9 @@ namespace game {
 		for (auto &player_plane : Player_Plane_List)
 		{
 			//shoot
-			if (game_controller.Get_control() == 'k' && game_controller.Get_time() % 1 == 0)
+			if (game_controller.Get_control() == 'k')
 			{
-				Bullet_List.push_back((player_plane->Shoot(2)));
+				Bullet_List.push_back((player_plane->Shoot(game_controller.Get_bullet_vel())));
 			}
 
 			//interact with bullet
@@ -260,9 +274,9 @@ namespace game {
 		{
 			//cause player plane interacted with enemy plane before, so ignore here;
 			//shoot
-			if (game_controller.Get_time() % 80 < 8 && game_controller.Get_time() % 3==0)
+			if (game_controller.Shoot_or_not_e())
 			{
-				survival_pool[prop_type::bullet].push_back(e_plane->Shoot(1.5));
+				survival_pool[prop_type::bullet].push_back(e_plane->Shoot(game_controller.Get_bullet_vel()));
 			}
 			//interact with bullet
 			for (auto& bullet : Bullet_List)
@@ -294,24 +308,24 @@ namespace game {
 		while (survival_pool[prop_type::player_plane].size() < 1)
 		{
 			survival_pool[prop_type::player_plane].push_back(
-				player_plane::Player_Plane::Generate(2.5, game_controller.screen_posi[posi_type::down],game_controller.Get_screen_w(),game_controller.Get_screen_h()));
+				player_plane::Player_Plane::Generate(2, game_controller.screen_posi[posi_type::down],game_controller.Get_screen_w(),game_controller.Get_screen_h()));
 		}
 		while (survival_pool[prop_type::enemy].size() + bomb_pool[prop_type::enemy].size()+2
 			<= game_controller.Get_enemy_num())
 		{
+
 			survival_pool[prop_type::enemy].push_back(
-				enemy_plane::Enemy_Plane::Generate(1.5, game_controller.screen_posi[posi_type::left_up],game_controller.Get_screen_w(), game_controller.Get_screen_h()));
-			survival_pool[prop_type::enemy].push_back(
-				enemy_plane::Enemy_Plane::Generate(1.5, game_controller.screen_posi[posi_type::up_right], game_controller.Get_screen_w(), game_controller.Get_screen_h()));
+				enemy_plane::Enemy_Plane::Generate(game_controller.Get_enemy_plane_vel(), game_controller.Get_random_posi(), game_controller.Get_screen_w(), game_controller.Get_screen_h()));
 		}
 
-		if (game_controller.Get_time() % 50 == 0)
+		if (game_controller.Is_generate_tool())
 		{
 			while (survival_pool[prop_type::tool].size() + bomb_pool[prop_type::tool].size()
 				< game_controller.Get_tool_num())
 			{
+
 				survival_pool[prop_type::tool].push_back(
-					tool::Tool::Generate(0, game_controller.screen_posi[posi_type::right_down]));
+					tool::Tool::Generate(0.5, game_controller.Get_random_posi())); //random genarate tool
 			}
 		}
 
@@ -334,13 +348,13 @@ namespace game {
 		Initial();
 
 		game_drawer.Draw_start_menu(game_controller);
-		game_drawer.Draw_select(game_controller);
+		if (!game_controller.Is_excit()) { game_drawer.Draw_select(game_controller); }
 		
 		while (!game_controller.Is_excit())
 		{
-			Sleep(10);       //pause 10ms
+			Sleep(game_controller.Get_frame_time());       //pause 10ms
 
-			game_controller.Time_add();          //time unit : 10ms;
+			game_controller.Time_add();          
 
 			if (_kbhit())
 			{
