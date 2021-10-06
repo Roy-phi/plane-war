@@ -350,7 +350,7 @@ namespace drawer {
 
     void Drawer::Draw_line(const unsigned int& x, const unsigned int& y,const  int len) {
         Set_cursor_position(x, y);
-        for (unsigned int i = 0; i < len; ++i)
+        for (int i = 0; i < len; ++i)
         {
             printf_s("■");
         }

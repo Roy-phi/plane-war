@@ -25,10 +25,10 @@ namespace prop {
 		virtual void Move(const int &control) = 0;
 		void Forward();
 
-		virtual const std::shared_ptr<Prop> Shoot(const double& v)const { return std::shared_ptr<Prop>(); };
+		
 		//Abstract factory class
 
-		virtual void Interact( Prop&, const int &time) = 0;
+		virtual bool Interact( Prop&, const int &time) = 0;
 
 		virtual const std::string Get_type()const = 0;
 

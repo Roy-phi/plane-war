@@ -11,20 +11,15 @@ namespace enemy_plane {
 		//std::default_random_engine random;
 		std::random_device rd;  // Will be used to obtain a seed for the random number engine
 		std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-		std::normal_distribution<> dis(-0.3, 0.3);
-		//std::uniform_real_distribution<double> v(0.0,  1.5*Get_velocity());
-		//std::uniform_real_distribution<double> dir(0.0, 2*PI);
+		std::normal_distribution<> dis(-0.1, 0.1);
 
-		
 		Prop::Set_direct(Prop::Get_dir()+dis(gen));
 
 		Prop::Forward();
 
-		//Plane::Restrict_move_range(Get_size());
-
 	}
 
-	void Enemy_Plane::Interact(Prop& anotherp, const int& time)
+	bool Enemy_Plane::Interact(Prop& anotherp, const int& time)
 	{
 		if (Prop::Is_collide(anotherp))
 		{
@@ -32,6 +27,7 @@ namespace enemy_plane {
 			{
 				anotherp.Set_hitted(time);//
 				Upgrade();                //catch a tool, can improve level
+				return true;
 			}
 
 			else if (anotherp.Get_type() == "Bullet" && !Plane::Is_same_camp(anotherp))
@@ -42,8 +38,10 @@ namespace enemy_plane {
 					anotherp.Set_hitted(time);
 					Degrade();
 				}
+				return true;
 			}
 		}
+		return false;
 	}
 
 	const std::string Enemy_Plane::Get_type()const

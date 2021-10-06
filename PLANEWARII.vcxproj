@@ -155,11 +155,31 @@
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Enemy_Plane.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="Music_Player.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Player_Plane.h" />
     <ClInclude Include="Prop.h" />
     <ClInclude Include="Public_value.h" />
     <ClInclude Include="Tool.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\MUSIC\achievement.wav" />
+    <Media Include="..\MUSIC\background.wav" />
+    <Media Include="..\MUSIC\background0_ds.mp3" />
+    <Media Include="..\MUSIC\background1_ds.mp3" />
+    <Media Include="..\MUSIC\background_music.mp3" />
+    <Media Include="..\MUSIC\game_over.wav" />
+    <Media Include="..\MUSIC\game_over_ds.wav" />
+    <Media Include="..\MUSIC\hit.wav" />
+    <Media Include="..\MUSIC\hit_ds.wav" />
+    <Media Include="..\MUSIC\out.wav" />
+    <Media Include="..\MUSIC\shoot.wav" />
+    <Media Include="..\MUSIC\shoot_ds.wav" />
+    <Media Include="..\MUSIC\upgrade.wav" />
+    <Media Include="..\MUSIC\upgrade_ds.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

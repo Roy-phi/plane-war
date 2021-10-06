@@ -26,7 +26,7 @@ namespace bullet {
 
 		virtual const int Get_size() const final override;
 
-		virtual void  Interact(Prop&, const int& time)  final override {};
+		virtual bool  Interact(Prop&, const int& time)  final override { return false; };
 
 	private:
 		const std::vector<int> shape_enemy = {1,1};

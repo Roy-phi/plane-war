@@ -32,7 +32,7 @@ namespace player_plane {
 		Plane::Restrict_move_range(Get_size());
 	}
 
-	void Player_Plane::Interact( Prop & anotherp,const int &time) 
+	bool Player_Plane::Interact( Prop & anotherp,const int &time) 
 		//interact with enviroment, bullet,tool,and enemy plane
 	{
 		if (Prop::Is_collide(anotherp))
@@ -41,6 +41,7 @@ namespace player_plane {
 			{
 				anotherp.Set_hitted(time);//
 				Upgrade();                //catch a tool, can improve level
+				return true;
 			}
 
 			else if (anotherp.Get_type() == "Bullet" && !Plane::Is_same_camp(anotherp))
@@ -49,14 +50,18 @@ namespace player_plane {
 				{
 					anotherp.Set_hitted(time);
 					Degrade();
+					return true;
 				}
 			}
 			else if(anotherp.Get_type() == "Enemy_Plane")
 			{
 				anotherp.Set_hitted(time);
 				Degrade();
+				return true;
 			}
+			
 		}
+		return false;
 	}
 
 	const std::string Player_Plane::Get_type()const

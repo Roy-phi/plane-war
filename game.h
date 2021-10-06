@@ -8,6 +8,7 @@
 #include "Prop.h"
 #include "Controller.h"
 #include"Drawer.h"
+#include "Music_Player.h"
 #include <list>
 #include <vector>
 #include <unordered_map>
@@ -60,7 +61,7 @@ namespace game {
 
 		void Clean_battle_field();
 
-		void Draw_battle_filed();
+		void Draw_battle_field();
 
 		void Clear();
 
@@ -74,7 +75,7 @@ namespace game {
 
 		drawer::Drawer game_drawer;
 
-
+		music_player::Music_Player m_player;
 
 	};
 }

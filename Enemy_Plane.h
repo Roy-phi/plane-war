@@ -29,7 +29,7 @@ namespace enemy_plane {
 
 		virtual void  Move(const int& control) final override;
 
-		virtual void  Interact(Prop&, const int& time) final override;
+		virtual bool  Interact(Prop&, const int& time) final override;
 
 		virtual const std::string Get_type()const final override;
 

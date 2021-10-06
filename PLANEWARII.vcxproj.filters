@@ -77,5 +77,57 @@
     <ClInclude Include="Controller.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Music_Player.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Filter>资源文件</Filter>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\MUSIC\achievement.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\background.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\game_over.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\hit.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\out.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\shoot.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\upgrade.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\background_music.mp3">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\upgrade_ds.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\shoot_ds.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\hit_ds.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\game_over_ds.wav">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\background1_ds.mp3">
+      <Filter>资源文件</Filter>
+    </Media>
+    <Media Include="..\MUSIC\background0_ds.mp3">
+      <Filter>资源文件</Filter>
+    </Media>
   </ItemGroup>
 </Project>

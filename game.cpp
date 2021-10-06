@@ -46,26 +46,20 @@ namespace game {
 	}
 
 	void Game::Update() {
-		Move_prop();
+		Move_prop(); //move property
 
-		//cout << "move prop" << endl;
-
-		if (Collide_check())
+		if (Collide_check())          // prop Collide with each other, and return if player plane was hitted
 		{
 			game_controller.Set_game_over();
 		}
-		//cout << "collide check" << endl;
 
-		Game_over_check();
+		Game_over_check();  //check if game over and draw menu
 
-		Clean_battle_field();
-		//cout << "Clean_battle_field" << endl;
+		Clean_battle_field(); // after prop collided, destroy some props
 
-		Draw_battle_filed();
-		//cout << "Draw_battle_filed" << endl;
+		Draw_battle_field();  //draw new frame after clean battle field;
 
 		Generate_plane();
-		//cout << "Generate_plane" << endl;
 
 	}
 
@@ -73,9 +67,8 @@ namespace game {
 	{
 		if (game_controller.Is_game_over())
 		{
-			Game_over();
-			///.... should be modified,if player want to continue
-			//Draw() start page
+			m_player.Game_over_sound();
+			Game_over();         //draw game over info and select menu
 		}
 	}
 
@@ -187,7 +180,7 @@ namespace game {
 		
 	}
 
-	void Game::Draw_battle_filed() {
+	void Game::Draw_battle_field() {
 
 		game_drawer.Draw_clear();
 
@@ -243,13 +236,16 @@ namespace game {
 			//shoot
 			if (game_controller.Get_control() == 'k')
 			{
-				Bullet_List.push_back((player_plane->Shoot(game_controller.Get_bullet_vel())));
+				Bullet_List.push_back((dynamic_cast<plane::Plane*>( player_plane.get()) ->Shoot(game_controller.Get_bullet_vel())));
+				m_player.Shoot_sound();
 			}
 
 			//interact with bullet
 			for (auto &bullet : Bullet_List)
 			{
-				player_plane->Interact((*bullet), game_controller.Get_time());
+				if (player_plane->Interact((*bullet), game_controller.Get_time())) {
+					m_player.Hit_sound();
+				};
 			}
 			//interact with enemy plane
 			for (auto &e_plane : Enemy_Plane_List)
@@ -259,7 +255,9 @@ namespace game {
 			//interact with tool
 			for (auto &tool : Tool_List)
 			{
-				player_plane->Interact((*tool), game_controller.Get_time());
+				if (player_plane->Interact((*tool), game_controller.Get_time())) {
+					m_player.Upgrade();
+				};
 			}
 			//if player plane level<=0,means destroyed,game over
 			game_controller.Set_player_plane_level(player_plane->Get_level());
@@ -276,12 +274,14 @@ namespace game {
 			//shoot
 			if (game_controller.Shoot_or_not_e())
 			{
-				survival_pool[prop_type::bullet].push_back(e_plane->Shoot(game_controller.Get_bullet_vel()));
+				survival_pool[prop_type::bullet].push_back((dynamic_cast<plane::Plane*>(e_plane.get())->Shoot(game_controller.Get_bullet_vel())));
 			}
 			//interact with bullet
 			for (auto& bullet : Bullet_List)
 			{
-				e_plane->Interact((*bullet), game_controller.Get_time());
+				if (e_plane->Interact((*bullet), game_controller.Get_time())) {
+					m_player.Hit_sound();
+				};
 			}
 			//interact with tool
 			for (auto& tool : Tool_List)
@@ -345,16 +345,20 @@ namespace game {
 	}
 
 	void Game::Play() {
+
 		Initial();
 
 		game_drawer.Draw_start_menu(game_controller);
-		if (!game_controller.Is_excit()) { game_drawer.Draw_select(game_controller); }
+		if (!game_controller.Is_excit()) {
+			game_drawer.Draw_select(game_controller);
+			m_player.Backgound_sound(true);
+		}
 		
 		while (!game_controller.Is_excit())
 		{
 			Sleep(game_controller.Get_frame_time());       //pause 10ms
 
-			game_controller.Time_add();          
+			game_controller.Time_add();						//each frame time++
 
 			if (_kbhit())
 			{
@@ -369,6 +373,7 @@ namespace game {
 			Update();
 			game_controller.Set_control(0);
 		}
+		m_player.Backgound_sound(false);
 
 		//std::cout << "game excit" << std::endl;
 	}

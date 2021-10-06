@@ -20,6 +20,7 @@ namespace plane {
 		bool Is_same_camp(const Prop&)const;
 		void Restrict_move_range(const int& size);
 		virtual const int Get_level()const;
+		virtual const std::shared_ptr<Prop> Shoot(const double& v)const=0;
 
 	private:
 		unsigned int level = 1;  // player plane level range is 0-higest_level, if set to 0, game over,enemy also has level
